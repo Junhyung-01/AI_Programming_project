@@ -89,22 +89,24 @@ export default function LobbyScreen() {
           >
             <Swords size={24} /> 전투 스테이지
           </button>
-          <button 
-            className="btn btn-secondary" 
-            onClick={() => chooseRoute('shop')} 
-            disabled={isBossStage}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 16, opacity: isBossStage ? 0.5 : 1 }}
-          >
-            <ShoppingCart size={20} /> 상점 스테이지
-          </button>
-          <button 
-            className="btn btn-secondary" 
-            onClick={() => chooseRoute('rest')} 
-            disabled={isBossStage}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 16, opacity: isBossStage ? 0.5 : 1 }}
-          >
-            <BedDouble size={20} /> 휴식 스테이지
-          </button>
+          {!isBossStage && (
+            <>
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => chooseRoute('shop')} 
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 16 }}
+              >
+                <ShoppingCart size={20} /> 상점 스테이지
+              </button>
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => chooseRoute('rest')} 
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 16 }}
+              >
+                <BedDouble size={20} /> 휴식 스테이지
+              </button>
+            </>
+          )}
           <button 
             className="btn btn-secondary" 
             onClick={() => setShowInventory(true)}
