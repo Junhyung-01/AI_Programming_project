@@ -28,7 +28,7 @@ export default function StartScreen() {
 
   return (
     <div style={{ maxWidth: 800, margin: '40px auto', padding: 20 }}>
-      <h1 style={{ textAlign: 'center', marginBottom: 40, color: 'var(--accent-color)', fontSize: '2.5rem' }}>Python RPG Web</h1>
+      <h1 style={{ textAlign: 'center', marginBottom: 40, color: 'var(--accent-color)', fontSize: '2.5rem' }}>TEXT RPG GAME</h1>
       
       <div className="glass-panel" style={{ marginBottom: 30 }}>
         <h2>캐릭터 생성</h2>
