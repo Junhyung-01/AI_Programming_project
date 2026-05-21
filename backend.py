@@ -498,6 +498,11 @@ dist_path = os.path.join(os.path.dirname(__file__), "frontend", "dist")
 
 if os.path.exists(dist_path):
     app.mount("/assets", StaticFiles(directory=os.path.join(dist_path, "assets")), name="assets")
+    
+    # /images 폴더도 static 파일로 서빙하도록 마운트 설정
+    images_path = os.path.join(dist_path, "images")
+    if os.path.exists(images_path):
+        app.mount("/images", StaticFiles(directory=images_path), name="images")
 
     @app.get("/")
     def serve_index():
