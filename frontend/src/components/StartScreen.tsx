@@ -6,6 +6,7 @@ export default function StartScreen() {
   const { gameData, startGame } = useStore();
   const [name, setName] = useState('');
   const [selectedJob, setSelectedJob] = useState('');
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   if (!gameData) return <div className="glass-panel" style={{margin: '50px auto', maxWidth: 400}}>로딩 중...</div>;
 
@@ -15,6 +16,14 @@ export default function StartScreen() {
     "권사": <User />,
     "도적": <Wind />,
     "용기사": <Shield />
+  };
+
+  const jobImages: Record<string, string> = {
+    "전사": "/images/jobs/warrior.png",
+    "마법사": "/images/jobs/mage.png",
+    "권사": "/images/jobs/monk.png",
+    "도적": "/images/jobs/thief.png",
+    "용기사": "/images/jobs/dragon_knight.png"
   };
 
   return (
@@ -41,19 +50,48 @@ export default function StartScreen() {
               key={job}
               onClick={() => setSelectedJob(job)}
               style={{
-                padding: 20,
+                padding: '20px 10px',
                 borderRadius: 12,
                 cursor: 'pointer',
                 textAlign: 'center',
                 border: `2px solid ${selectedJob === job ? 'var(--accent-color)' : 'var(--panel-border)'}`,
                 background: selectedJob === job ? 'rgba(99, 102, 241, 0.2)' : 'rgba(0,0,0,0.3)',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: 180
               }}
             >
-              <div style={{ marginBottom: 10, color: selectedJob === job ? 'var(--accent-color)' : 'var(--text-secondary)' }}>
-                {jobIcons[job]}
+              <div>
+                <div style={{ 
+                  marginBottom: 12, 
+                  color: selectedJob === job ? 'var(--accent-color)' : 'var(--text-secondary)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 80
+                }}>
+                  {jobImages[job] && !imageErrors[job] ? (
+                    <img 
+                      src={jobImages[job]} 
+                      alt={job}
+                      onError={() => setImageErrors(prev => ({ ...prev, [job]: true }))}
+                      style={{ 
+                        maxWidth: '100%', 
+                        maxHeight: '100%', 
+                        objectFit: 'contain',
+                        borderRadius: 8
+                      }} 
+                    />
+                  ) : (
+                    <div style={{ transform: 'scale(1.5)', display: 'flex', alignItems: 'center' }}>
+                      {jobIcons[job]}
+                    </div>
+                  )}
+                </div>
+                <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{job}</h3>
               </div>
-              <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{job}</h3>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: 8 }}>
                 HP: {gameData.job_stats[job].hp}<br/>
                 ATK: {gameData.job_stats[job].atk}
